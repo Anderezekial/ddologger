@@ -21,7 +21,7 @@ pip install Pillow
 
 ## Prep Work
 
-*You should redo this section any time you move your screen (if windowed) or move your Combat window*
+**You should redo this section any time you move your screen (if windowed) or move your Combat window**
 
 - Open up a command line. `cmd.exe` or find the `Command Prompt`
 - Navigate to the created folder.
@@ -44,7 +44,7 @@ C:\Users\User\Documents\ddologger python ddo-logger.py -m S
 ```
 C:\Users\User\Documents\ddologger python ddo-logger.py -m B -b (95,458,602,758)
 ```
-  - *MAKE SURE TO NOT PUT ANY SPACES IN THE COORDINATES*
+  - **MAKE SURE TO NOT PUT ANY SPACES IN THE COORDINATES**
 - This will create an image called `ddo_box_ss_single.bmp` in the folder.
   - Open this image in Paint.NET and see if it correctly gets all of the Combat window
     - If not, bump around the coordinate numbers and rerun the command till you get the correct image
@@ -61,7 +61,7 @@ C:\Users\User\Documents\ddologger python ddo-logger.py -m F -b (95,458,602,758)
 Here are my notes for what I did to create this for those that are interested.
 
 If you want, you can add the optional `-s` flag, which will save the screenshots (not all images) and text files generated so you can see what is going on.
-- *WARNING* - This will take up alot of space on your harddrive. For me, it was about 180MB per minute.
+- **WARNING** - This will take up alot of space on your harddrive. For me, it was about 180MB per minute.
 
 Training Tesseract
 
@@ -115,7 +115,7 @@ move shapetable ddo.shapetable
 ```
 combine_tessdata ddo.
 ```
-  - *Don’t forget the period at the end of the line!*
+  - **Don’t forget the period at the end of the line!**
 - Copy the `ddo.trainneddata` file into the `tessdata` folder
 
 Tesseract should now be trained.
