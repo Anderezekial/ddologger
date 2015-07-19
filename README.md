@@ -78,6 +78,7 @@ Training Tesseract
 tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX batch.nochop makebox
 ```
   - Didn't do it, but should for future cases. Refer to the Tip #1 in the resolverdiologic link.
+
 - Opened up each .bmp in the jTessBoxEditor. Manually fixed any issues, such as doing 'Split' and 'Merge' to get correct character reads. Also selected a ton of boxes at the top and did 'Delete' to get rid of the junk mapping for the chopped off data.
   - Since the .bmp and .box files are named the same, this is how jTessBoxEditor opens it correctly
 - Saved the newly edited .box files
@@ -117,6 +118,7 @@ move shapetable ddo.shapetable
 combine_tessdata ddo.
 ```
   - **Don’t forget the period at the end of the line!**
+
 - Copy the `ddo.trainneddata` file into the `tessdata` folder
 
 Tesseract should now be trained.
