@@ -63,6 +63,7 @@ Once we have the correct coordinates, we just need to run the program while we p
 ```
 python ddo-logger.py -m F -b (95,458,602,758)
 ```
+- While you have the command prompt focused, press `ESC` to stop the program.
 
 ### Development
 
