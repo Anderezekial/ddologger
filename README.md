@@ -73,20 +73,22 @@ Training Tesseract
 - Convert images to just White Text on Black background
 - Resize the image to be 6 times as big. This seemed to be the sweet spot where Tesseract read the font the best while not going overboard on size.
 - Renamed my 3 test images to `ddo-ddo_font-expX.bmp`, with X being 1,2,3
+- **You can use the `runit.bat` file to speed up the running of these commands**
 - Ran for all 3
 ```
-tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX batch.nochop makebox
+tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX -psm 6 batch.nochop makebox
 ```
   - Didn't do it, but should for future cases. Refer to the Tip #1 in the resolverdiologic link.
+    - I couldn't get this tip to work, so I ended up just doing 3 images and making a ddotrain.traineddata file, then using that for `-l ddotrain` while doing the rest of my training images.
 
 - Opened up each .bmp in the jTessBoxEditor. Manually fixed any issues, such as doing 'Split' and 'Merge' to get correct character reads. Also selected a ton of boxes at the top and did 'Delete' to get rid of the junk mapping for the chopped off data.
   - Since the .bmp and .box files are named the same, this is how jTessBoxEditor opens it correctly
 - Saved the newly edited .box files
 - Ran for all 3
 ```
-tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX nobatch box.train
+tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX -psm 6 nobatch box.train
 ```
-- Need to open up all the generated `.tr` files, find the `UnknownFont` entries and do a Replace All with `ddo_font`, otherwise the other tools break because I am using `ddo_font`
+- Need to open up all the generated `.tr` files, find the `ddo_font` entries and do a Replace All with `ddo_font`, otherwise the other tools break because I am using `ddo_font`
 - Ran 
 ```
 unicharset_extractor.exe ddo-ddo_font-exp1.box ddo-ddo_font-exp2.box ddo-ddo_font-exp3.box
