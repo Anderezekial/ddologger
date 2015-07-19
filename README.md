@@ -37,14 +37,15 @@ C:\Users\User\Documents\ddologger python ddo-logger.py -m S
 - This will create a file called `ddo_ss_single.bmp` in the folder.
 - Open up the `ddo_ss_single.bmp` file in Paint.NET
   - I choose the `Color Picker` tool, so I don't mess anything up.
-  - Hover over the top-left corner of the Combat window. Write down the coordinates, ex: 95,458
-  - Hover over the bottom-right corner of the Combat window. Write down the coordinates, ex: 602,758
-- We now have our box coordinates by combining the two sets: (95,458,602,758)
+  - Hover over the top-left corner of the Combat window. Write down the coordinates, ex: `95,458`
+  - Hover over the bottom-right corner of the Combat window. Write down the coordinates, ex: `602,758`
+- We now have our box coordinates by combining the two sets: `(95,458,602,758)`
 - Focus back to the Command prompt and run:
 ```
 C:\Users\User\Documents\ddologger python ddo-logger.py -m B -b (95,458,602,758)
 ```
   - **MAKE SURE TO NOT PUT ANY SPACES IN THE COORDINATES**
+
 - This will create an image called `ddo_box_ss_single.bmp` in the folder.
   - Open this image in Paint.NET and see if it correctly gets all of the Combat window
     - If not, bump around the coordinate numbers and rerun the command till you get the correct image
@@ -65,7 +66,7 @@ If you want, you can add the optional `-s` flag, which will save the screenshots
 
 Training Tesseract
 
-- Got the jTessBoxEditor. Any of the editors will do, just need to be able to fix the mappings.
+- Got the `jTessBoxEditor`. Any of the editors will do, just need to be able to fix the mappings.
   - http://vietocr.sourceforge.net/training.html
 - I tested saving as .png and .bmp files. Going to go with .bmp, though not sure which is best to use.
 - Took the box coordinates images, since that is all I really care about from the screenshots.
