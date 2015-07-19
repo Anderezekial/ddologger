@@ -11,8 +11,8 @@ A logger for the DDO MMO combat log
 - Install Python
   - You will need to setup the an Environment Variable in order to access python from anywhere
   - Go to `My Computer -> Properties -> Advanced -> Environment Variables`
-    - Select the `PATH` variable and hit `Edit`
-    - Add the path to your Python folder, ex. `C:\Python27\'
+    - Select the `PATH` variable in the bottom section and hit `Edit`
+    - Add the path to your Python folder, ex. `C:\MYOTHERPROGRAMS;C:\Python27\;'
 	  - **Make sure you just add, don't change/remove anything else**
 - Open up a command line. `cmd.exe` or find the `Command Prompt`
 - Install Pillow by typing
@@ -24,6 +24,7 @@ pip install Pillow
 - Install Tesseract. Install it to your created folder.
 - Put the `ddo-logger.py` file in the created folder
 - Put the `ddo.traineddata` file inside the `tessdata` of the copied tesseract folders
+- **Make sure the `ddo-logger.py` and `tesseract.exe` are in the same folder**
 
 ## Prep Work
 
@@ -38,7 +39,7 @@ C:\ cd C:\Users\User\Documents\ddologger
 - ALT-TAB if in Fullscreen.
 - Focus the Command prompt and run:
 ```
-C:\Users\User\Documents\ddologger python ddo-logger.py -m S
+python ddo-logger.py -m S
 ```
 - This will create a file called `ddo_ss_single.bmp` in the folder.
 - Open up the `ddo_ss_single.bmp` file in Paint.NET
@@ -48,7 +49,7 @@ C:\Users\User\Documents\ddologger python ddo-logger.py -m S
 - We now have our box coordinates by combining the two sets: `(95,458,602,758)`
 - Focus back to the Command prompt and run:
 ```
-C:\Users\User\Documents\ddologger python ddo-logger.py -m B -b (95,458,602,758)
+python ddo-logger.py -m B -b (95,458,602,758)
 ```
   - **MAKE SURE TO NOT PUT ANY SPACES IN THE COORDINATES**
 
@@ -60,7 +61,7 @@ C:\Users\User\Documents\ddologger python ddo-logger.py -m B -b (95,458,602,758)
 
 Once we have the correct coordinates, we just need to run the program while we play
 ```
-C:\Users\User\Documents\ddologger python ddo-logger.py -m F -b (95,458,602,758)
+python ddo-logger.py -m F -b (95,458,602,758)
 ```
 
 ### Development
