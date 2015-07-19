@@ -9,8 +9,11 @@ A logger for the DDO MMO combat log
 
 ## Setup
 - Install Python
-- Reference here to get it all setup correctly, mostly to do with the Enivorment variable PATH
-  - https://docs.python.org/2/using/windows.html
+  - You will need to setup the an Environment Variable in order to access python from anywhere
+  - Go to `My Computer -> Properties -> Advanced -> Environment Variables`
+    - Select the `PATH` variable and hit `Edit`
+    - Add the path to your Python folder, ex. `C:\Python27\'
+	  - **Make sure you just add, don't change/remove anything else**
 - Open up a command line. `cmd.exe` or find the `Command Prompt`
 - Install Pillow by typing
 ```
