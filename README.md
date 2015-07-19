@@ -9,7 +9,10 @@ A logger for the DDO MMO combat log
 
 ## Setup
 - Install Python
-- Install Pillow
+- Reference here to get it all setup correctly, mostly to do with the Enivorment variable PATH
+  - https://docs.python.org/2/using/windows.html
+- Open up a command line. `cmd.exe` or find the `Command Prompt`
+- Install Pillow by typing
 ```
 pip install Pillow
 ```
@@ -17,7 +20,7 @@ pip install Pillow
 - Create a folder for everything to live in, such as: `C:\Users\User\Documents\ddologger`
 - Install Tesseract. Install it to your created folder.
 - Put the `ddo-logger.py` file in the created folder
-- Put the `ddo.traineddata` file inside the `tessdata` folder
+- Put the `ddo.traineddata` file inside the `tessdata` of the copied tesseract folders
 
 ## Prep Work
 
