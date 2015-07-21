@@ -88,7 +88,7 @@ def AppendCombatLog(combatTime, txtQueue, first, save):
                 initialFile = file1.readlines()
 
             # Remove junk lines that the OCR failed to parse
-            if not regex.match(initialFile[0]):
+            if len(initialFile) > 0 and not regex.match(initialFile[0]):
                 initialFile = initialFile[1:]
             # Use list comprehension to remove extra newlines added by OCR
             initialFile = [ x for x in initialFile if not x == '\n' ]
@@ -106,13 +106,13 @@ def AppendCombatLog(combatTime, txtQueue, first, save):
                 next = file2.readlines()
 
             # Remove junk lines that the OCR failed to parse
-            if not regex.match(previous[0]):
+            if len(previous) > 0 and not regex.match(previous[0]):
                 previous = previous[1:]
             # Use list comprehension to remove extra newlines added by OCR
             previous = [ x for x in previous if not x == '\n' ]
 
             # Remove junk lines that the OCR failed to parse
-            if not regex.match(next[0]):
+            if len(next) > 0 and not regex.match(next[0]):
                 next = next[1:]
             # Use list comprehension to remove extra newlines added by OCR
             next = [ x for x in next if not x == '\n' ]
