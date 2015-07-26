@@ -4,6 +4,7 @@ from ast import literal_eval
 from difflib import Differ
 from PIL import Image,ImageGrab,ImageOps
 
+first = True
 
 def Run(box, timestamp, txtQueue, save):
     if save:
@@ -12,7 +13,6 @@ def Run(box, timestamp, txtQueue, save):
         image = GetScreenshot()
     boxImage = GetBoxImage(image, box)
     ConvertImage(boxImage, timestamp, txtQueue)
-    #AppendCombatLog(combatTime, txtQueue, first, save)
 
 def SaveScreenshot():
     image = ImageGrab.grab()
@@ -29,6 +29,8 @@ def GetScreenshot():
     return image
 
 def SaveBox(coords):
+    with open('ddo_coordinates.txt', 'w') as file:
+        file.write(str(coords))
     image = Image.open('ddo_ss_single.bmp')
     region = image.crop(coords)
     region.save('ddo_box_ss_single.bmp', dpi=(200, 200))
@@ -79,25 +81,20 @@ def Tesseract(input_filename, output_filename, txtQueue):
         print "Couldn't remove temporary files. Check the folder and remove them so they don't take up unneeded space on your harddrive."
         pass
 
-def AppendCombatLog(combatTime, txtQueue, first, save):
-    regex = re.compile(r'^\((Combat|Effects)\):.+$', re.IGNORECASE)
+def AppendCombatLog(combatTime, txtQueue, save):
+    global first
 
-    if first[0]:
+    if first:
         if len(txtQueue) > 0:
             with open(txtQueue[0], 'r') as file1:
                 initialFile = file1.readlines()
 
-            # Remove junk lines that the OCR failed to parse
-            if len(initialFile) > 0 and not regex.match(initialFile[0]):
-                initialFile = initialFile[1:]
-            # Use list comprehension to remove extra newlines added by OCR
-            initialFile = [ x for x in initialFile if not x == '\n' ]
+            initialFile = CleanFile(initialFile)
 
             with open("ddo_combatlog_" + combatTime + ".txt", 'w') as file:
-                # Compare the files, get difference deltas
                 for line in initialFile:
                     file.write(line)
-            first[0] = False
+            first = False
     else:
         if len(txtQueue) >= 2:
             with open(txtQueue[0], 'r') as file1:
@@ -105,17 +102,8 @@ def AppendCombatLog(combatTime, txtQueue, first, save):
             with open(txtQueue[1], 'r') as file2:
                 next = file2.readlines()
 
-            # Remove junk lines that the OCR failed to parse
-            if len(previous) > 0 and not regex.match(previous[0]):
-                previous = previous[1:]
-            # Use list comprehension to remove extra newlines added by OCR
-            previous = [ x for x in previous if not x == '\n' ]
-
-            # Remove junk lines that the OCR failed to parse
-            if len(next) > 0 and not regex.match(next[0]):
-                next = next[1:]
-            # Use list comprehension to remove extra newlines added by OCR
-            next = [ x for x in next if not x == '\n' ]
+            previous = CleanFile(previous)
+            next = CleanFile(next)
 
             with open("ddo_combatlog_" + combatTime + ".txt", 'a') as file:
                 # Compare the files, get difference deltas
@@ -132,6 +120,15 @@ def AppendCombatLog(combatTime, txtQueue, first, save):
                     pass
             txtQueue.pop(0)
 
+def CleanFile(file):
+    regex = re.compile(r'^\((Combat|Effects)\):.+$', re.IGNORECASE)
+    # Remove junk top lines that the OCR failed to parse
+    if len(file) > 0 and not regex.match(file[0]):
+        file = file[1:]
+    # Remove extra newlines added by OCR
+    file = [ x for x in file if not x == '\n' ]
+    return file
+
 def ProgramOptions():
     parser = OptionParser()
     parser.add_option("-m", "--mode", dest="mode", default="S", help="Mode of operation. Options: S, B, C, F. S - Screenshot mode, B - Box Image mode, C - Conver to BW, F - Full mode. Default: S", type="string", metavar="MODE")
@@ -140,7 +137,7 @@ def ProgramOptions():
     parser.add_option("-s", "--savefiles", dest="saveFiles", action="store_true", help="If present, the progam will not delete the images/text it creates.", metavar="FILES")
     parser.add_option("-p", "--picture", dest="pic", help="Image.", metavar="PIC")
     parser.add_option("-c", "--count", dest="count", help="Count.")
-    parser.add_option_group(OptionGroup(parser, "Press Escape to exit. Example run:", "python ddo-logger.py -m F -b (0,0,500,800) -i 2 -s"))
+    parser.add_option_group(OptionGroup(parser, "Press Escape to exit. Example run:", "python ddo-logger.py -m F -i 2 -s"))
     return parser
 
 def main():
@@ -151,12 +148,12 @@ def main():
     elif options.mode == "B":
         SaveBox(literal_eval(options.box))
     elif options.mode == "C":
-        timestamp = str(int(time.time()))
         ConvertAndSaveImage(options.pic, literal_eval(options.box), options.count)
     elif options.mode == "F":
-        first = [True]
         combatTime = str(int(time.time()))
         txtQueue = []
+        with open('ddo_coordinates.txt', 'r') as file:
+            coords = literal_eval(file.readline())
         while True:
             if msvcrt.kbhit():
                 if ord(msvcrt.getch()) == 27:
@@ -175,12 +172,12 @@ def main():
                                 print "Couldn't remove text files. Check the folder and remove them so they don't take up unneeded space on your harddrive."
                                 pass
                     break
-            AppendCombatLog(combatTime, txtQueue, first, options.saveFiles)
+
+            AppendCombatLog(combatTime, txtQueue, options.saveFiles)
             timestamp = str(int(time.time()))
-            thread = threading.Thread(target=Run, args=[literal_eval(options.box), timestamp, txtQueue, options.saveFiles])
+            thread = threading.Thread(target=Run, args=[coords, timestamp, txtQueue, options.saveFiles])
             thread.daemon = True
             thread.start()
-            #first = False
             time.sleep(options.interval)
     else:
         print("Invalid mode provided.")

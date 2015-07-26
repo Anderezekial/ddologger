@@ -8,8 +8,8 @@ A logger for the DDO MMO combat log
 - Tesseract - I used version 3.02.02 -  https://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-ocr-setup-3.02.02.exe&can=2&q=
 
 ## Setup
-- Install Python
-  - You will need to setup the an Environment Variable in order to access python from anywhere
+- Install Python 
+  - You will need to setup the Environment Variable in order to access python from anywhere - **BE CAREFUL**
   - Go to `My Computer -> Properties -> Advanced -> Environment Variables`
     - Select the `PATH` variable in the bottom section and hit `Edit`
     - Add the path to your Python folder, ex. `C:\MYOTHERPROGRAMS;C:\Python27\;'
@@ -20,7 +20,7 @@ A logger for the DDO MMO combat log
 pip install Pillow
 ```
 - Install Paint.NET
-- Create a folder for everything to live in, such as: `C:\Users\User\Documents\ddologger`
+- Create a folder for everything to live in, such as: `C:\Users\[YourLogin]\Documents\ddologger`
 - Install Tesseract. Install it to your created folder.
 - Put the `ddo-logger.py` file in the created folder
 - Put the `ddo.traineddata` file inside the `tessdata` of the copied tesseract folders
@@ -33,10 +33,10 @@ pip install Pillow
 - Open up a command line. `cmd.exe` or find the `Command Prompt`
 - Navigate to the created folder.
 ```
-C:\ cd C:\Users\User\Documents\ddologger
+C:\ cd C:\Users\[YourLogin]\Documents\ddologger
 ```
 - Open up DDO. Log in and get on your character. Either focus to your Combat tab or pull your Combat tab out to its own window.
-- ALT-TAB if in Fullscreen.
+- If you are running in Fullscreen, you may need to take a screenshot yourself instead of using this program.
 - Focus the Command prompt and run:
 ```
 python ddo-logger.py -m S
@@ -56,14 +56,18 @@ python ddo-logger.py -m B -b (95,458,602,758)
 - This will create an image called `ddo_box_ss_single.bmp` in the folder.
   - Open this image in Paint.NET and see if it correctly gets all of the Combat window
     - If not, bump around the coordinate numbers and rerun the command till you get the correct image
+- It will also create a `ddo_coordinates.txt` file, which will be used in Full mode. Makes it easier to make small changes and to re-use if you don't change your screen.
 
 ## Executing
 
 Once we have the correct coordinates, we just need to run the program while we play
 ```
-python ddo-logger.py -m F -b (95,458,602,758)
+python ddo-logger.py -m F
 ```
 - While you have the command prompt focused, press `ESC` to stop the program.
+
+
+
 
 ### Development
 
@@ -96,7 +100,7 @@ tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX -psm 6 batch.nochop makebo
 ```
 tesseract.exe ddo-ddo_font-expX.bmp ddo-ddo_font-expX -psm 6 nobatch box.train
 ```
-- Need to open up all the generated `.tr` files, find the `ddo_font` entries and do a Replace All with `ddo_font`, otherwise the other tools break because I am using `ddo_font`
+- Need to open up all the generated `.tr` files, find the `UnknownFont` entries and do a Replace All with `ddo_font`, otherwise the other tools break because I am using `ddo_font`
 - Ran 
 ```
 unicharset_extractor.exe ddo-ddo_font-exp1.box ddo-ddo_font-exp2.box ddo-ddo_font-exp3.box
@@ -108,6 +112,7 @@ unicharset_extractor.exe ddo-ddo_font-exp1.box ddo-ddo_font-exp2.box ddo-ddo_fon
 ```
 shapeclustering.exe -F font_properties -U unicharset ddo-ddo_font-exp1.tr ddo-ddo_font-exp2.tr ddo-ddo_font-exp3.tr
 ```
+- Make sure this one runs correctly. If not, none of the rest will. Probably means you missed replacing `UnknownFont` in a `.tr` file
 - Ran 
 ```
 mftraining -F font_properties -U unicharset -O tla.unicharset ddo-ddo_font-exp1.tr ddo-ddo_font-exp2.tr ddo-ddo_font-exp3.tr
